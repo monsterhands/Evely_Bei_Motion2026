@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Player : MonoBehaviour
     public int numberOfTrailBombs;
 
     public Vector3[] corners;
+
+    public float ratioIncrease = 0;
 
     void Update()
     {
@@ -36,6 +39,22 @@ public class Player : MonoBehaviour
         {
             float distance = 1f;
             SpawnBombOnRandomCorner(distance);
+        }
+
+        Vector2 scrollValue = Mouse.current.scroll.ReadValue();
+        if (scrollValue.y > 0)
+        {
+            if (ratioIncrease > 1f)
+            {
+
+            } else
+            {
+                ratioIncrease = ratioIncrease + 0.1f;
+                WarpPlayer(enemyTransform, ratioIncrease);
+            }
+        } else if (scrollValue.y <= 0)
+        {
+
         }
     }
 
@@ -74,5 +93,10 @@ public class Player : MonoBehaviour
 
         Vector3 randomCorner = corners[randomCornerNumber];
         Instantiate(bombPrefab, randomCorner, Quaternion.identity);
+    }
+
+    public void WarpPlayer(Transform target, float ratio)
+    {
+        transform.position = Vector3.Lerp(transform.position, target.position, ratio);
     }
 }
