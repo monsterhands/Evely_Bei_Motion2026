@@ -10,7 +10,7 @@ public class FirstScript : MonoBehaviour
 
         int y = x + 1;
 
-        float health = 0.5f;
+        //float health = 0.5f;
 
         //Vector2 originPosition = new Vector2(0, 0);
         //using a constructor method to create a new Vector2 from scratch
