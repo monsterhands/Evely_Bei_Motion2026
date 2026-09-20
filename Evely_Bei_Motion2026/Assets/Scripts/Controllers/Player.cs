@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
 
     public float ratioIncrease = 0;
 
+    public float maxRange = 1;
+    public float lineTime = 3;
+
     void Update()
     {
         if(Keyboard.current.bKey.wasPressedThisFrame)
@@ -55,6 +58,12 @@ public class Player : MonoBehaviour
         } else if (scrollValue.y <= 0)
         {
 
+        }
+
+        if (Keyboard.current.aKey.wasPressedThisFrame)
+        {
+            maxRange = maxRange + 0.5f;
+            DetectAsteroids(maxRange, asteroidTransforms);
         }
     }
 
@@ -98,5 +107,28 @@ public class Player : MonoBehaviour
     public void WarpPlayer(Transform target, float ratio)
     {
         transform.position = Vector3.Lerp(transform.position, target.position, ratio);
+    }
+
+    public void DetectAsteroids(float inMaxRange, List<Transform> inAsteroids)
+    {
+        float sqrMaxRange = maxRange * maxRange;
+        foreach (Transform asteroid in inAsteroids)
+        {
+            if (asteroid != null)
+            {
+                Vector3 distanceToAsteroid = asteroid.transform.position - transform.position;
+                float distance = distanceToAsteroid.magnitude;
+                if (distance <= sqrMaxRange)
+                {
+                    Debug.DrawLine(transform.position, asteroid.position, Color.green, lineTime);
+                } else
+                {
+
+                }
+            } else
+                {
+
+                }
+        }
     }
 }
