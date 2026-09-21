@@ -22,9 +22,28 @@ public class Player : MonoBehaviour
     public float maxRange = 1;
     public float lineTime = 3;
 
+    public Vector3 currentVelocity;
+    public float speed;
+    public float accelerationTime;
+    public float accelerationDirection;
+    public float currentAcceleration;
+    public float maxSpeed;
+    public float decelerationTime;
+    public float deceleration;
+
+    void Start()
+    {
+        currentAcceleration = maxSpeed / accelerationTime;
+        deceleration = maxSpeed / decelerationTime;
+    }
+
     void Update()
     {
-        if(Keyboard.current.bKey.wasPressedThisFrame)
+        //basic motion to the right in every frame
+        //transform.position = transform.position + currentVelocity;
+        PlayerMovement();
+
+        if (Keyboard.current.bKey.wasPressedThisFrame)
         {
             float offsetDistance = 0.5f;
             bombOffset = transform.position * offsetDistance;
@@ -131,4 +150,105 @@ public class Player : MonoBehaviour
                 }
         }
     }
+
+    //basic velocity
+    //public void PlayerMovement()
+    //{
+    //    currentVelocity = Vector3.zero;
+    //    if (Keyboard.current.upArrowKey.isPressed)
+    //    {            
+    //        currentVelocity += Vector3.up;
+    //    }
+
+    //    if (Keyboard.current.rightArrowKey.isPressed)
+    //    {
+    //        currentVelocity += Vector3.right;
+    //    }
+
+    //    if (Keyboard.current.downArrowKey.isPressed)
+    //    {
+    //        currentVelocity += Vector3.down;
+    //    }
+
+    //    if (Keyboard.current.leftArrowKey.isPressed)
+    //    {
+    //        currentVelocity += Vector3.left;
+    //    }
+
+    //    transform.position = transform.position + currentVelocity.normalized * speed * Time.deltaTime;
+    //}
+
+    //basic acceleration
+    //public void PlayerMovement()
+    //{
+    //    maxSpeed = 5f;
+    //    Vector3 accelerationDirection = Vector3.zero;
+    //    if (Keyboard.current.upArrowKey.isPressed)
+    //    {
+    //        accelerationDirection += Vector3.up;
+    //    }
+
+    //    if (Keyboard.current.rightArrowKey.isPressed)
+    //    {
+    //        accelerationDirection += Vector3.right;
+    //    }
+
+    //    if (Keyboard.current.downArrowKey.isPressed)
+    //    {
+    //        accelerationDirection += Vector3.down;
+    //    }
+
+    //    if (Keyboard.current.leftArrowKey.isPressed)
+    //    {
+    //        accelerationDirection += Vector3.left;
+    //    }
+
+    //    if(currentVelocity.magnitude > maxSpeed)
+    //    {
+    //        currentVelocity = currentVelocity.normalized * maxSpeed;
+    //    } else if(currentVelocity.magnitude < maxSpeed)
+    //    {            
+    //        currentVelocity += accelerationDirection.normalized * currentAcceleration* Time.deltaTime;
+    //    }
+
+    //    transform.position = transform.position + currentVelocity * Time.deltaTime;
+    //}
+
+    //added deceleration
+    public void PlayerMovement()
+    {
+        maxSpeed = 5f;
+        Vector3 accelerationDirection = Vector3.zero;
+        if (Keyboard.current.upArrowKey.isPressed)
+        {
+            accelerationDirection += Vector3.up;
+        }
+
+        if (Keyboard.current.rightArrowKey.isPressed)
+        {
+            accelerationDirection += Vector3.right;
+        }
+
+        if (Keyboard.current.downArrowKey.isPressed)
+        {
+            accelerationDirection += Vector3.down;
+        }
+
+        if (Keyboard.current.leftArrowKey.isPressed)
+        {
+            accelerationDirection += Vector3.left;
+        }
+
+        if (currentVelocity.magnitude > maxSpeed)
+        {
+            currentVelocity = currentVelocity.normalized * maxSpeed;
+        }
+        else if (currentVelocity.magnitude < maxSpeed)
+        {
+            currentVelocity += accelerationDirection.normalized * currentAcceleration * Time.deltaTime;
+        }
+
+        transform.position = transform.position + currentVelocity * Time.deltaTime;
+    }
+
 }
