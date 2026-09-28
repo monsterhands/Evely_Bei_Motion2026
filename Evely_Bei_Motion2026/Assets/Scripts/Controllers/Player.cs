@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -32,6 +33,12 @@ public class Player : MonoBehaviour
     public float maxDecelSpeed;
     public float decelerationTime;
     public float deceleration;
+
+
+    //week4
+    public List<float> points;
+    int currentPointIndex;
+    int lastPointIndex;
 
     void Start()
     {
@@ -268,4 +275,15 @@ public class Player : MonoBehaviour
         transform.position = transform.position + currentVelocity * Time.deltaTime;
     }
 
+
+    //week4 work below
+
+    public void EnemyRadar(float radius, int circlePoints)
+    {
+        Vector3 origin = Vector3.zero;
+        //points.Count =;
+
+        float currentPointAngle = points[currentPointIndex];
+        float currentPointInRadians = currentPointAngle * Mathf.Deg2Rad;
+    }
 }
