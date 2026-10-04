@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
     public float accelerationDirection;
     public float currentAcceleration;
     public float maxSpeed;
-    public float maxDecelSpeed;
     public float decelerationTime;
     public float deceleration;
 
@@ -37,8 +36,7 @@ public class Player : MonoBehaviour
     {
         currentAcceleration = maxSpeed / accelerationTime;
 
-
-        deceleration = maxDecelSpeed / decelerationTime;
+        deceleration = maxSpeed / decelerationTime;
     }
 
     void Update()
@@ -223,7 +221,6 @@ public class Player : MonoBehaviour
     public void PlayerMovement()
     {
         maxSpeed = 5f;
-        maxDecelSpeed = 1f;
         Vector3 accelerationDirection = Vector3.zero;
         if (Keyboard.current.upArrowKey.isPressed)
         {
@@ -245,22 +242,16 @@ public class Player : MonoBehaviour
             accelerationDirection += Vector3.left;
         }
 
-        if (Keyboard.current.upArrowKey.wasReleasedThisFrame)
+        if (accelerationDirection.magnitude == 0)
         {
-            //accelerationDirection += Vector3.up;
-            //deceleration = 1f;
-            currentVelocity += accelerationDirection.normalized * (-deceleration) * Time.deltaTime;
-            //currentDeceleration = accelerationDirection.normalized * deceleration * Time.deltaTime;
-            //currentVelocity -= currentDeceleration;
-            if (currentVelocity.magnitude == 0)
-            {
-                deceleration = 0f;
-            }
-        } else if (currentVelocity.magnitude > maxSpeed)
+            currentVelocity += -currentVelocity.normalized * deceleration * Time.deltaTime;            
+        }
+            
+        if (currentVelocity.magnitude > maxSpeed)
         {
             currentVelocity = currentVelocity.normalized * maxSpeed;
         }
-        else if (currentVelocity.magnitude < maxSpeed && deceleration == 0)
+        else if (currentVelocity.magnitude < maxSpeed)
         {
             currentVelocity += accelerationDirection.normalized * currentAcceleration * Time.deltaTime;
         }
