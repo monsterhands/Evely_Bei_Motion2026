@@ -1286,6 +1286,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
+      propertyPath: maxSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
+      propertyPath: playerShip
+      value: 
+      objectReference: {fileID: 1430735984}
+    - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
+      propertyPath: comfortZone
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
+      propertyPath: maxDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
+      propertyPath: accelerationTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
+      propertyPath: decelerationTime
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2065,6 +2093,11 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1430735984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1742679311805458, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+  m_PrefabInstance: {fileID: 2030902519}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1442887648
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2468,6 +2501,7 @@ MonoBehaviour:
   - {fileID: 426582573}
   - {fileID: 2257695664884323191}
   drawingTime: 0.5
+  timer: 0
 --- !u!4 &1573207886
 Transform:
   m_ObjectHideFlags: 0
