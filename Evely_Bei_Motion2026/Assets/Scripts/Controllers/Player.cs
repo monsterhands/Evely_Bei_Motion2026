@@ -39,7 +39,9 @@ public class Player : MonoBehaviour
     Vector3 radiusOffset;
     public float radiusValue;
     public int circlePointsValue;
-    public int indexAngles;
+    public int indexAngles = 0;
+
+    public int powerups;
 
     void Start()
     {
@@ -98,7 +100,24 @@ public class Player : MonoBehaviour
             DetectAsteroids(maxRange, asteroidTransforms);
         }
 
-        EnemyRadar(radiusValue, circlePointsValue);
+        //EnemyRadar(radiusValue, circlePointsValue);
+
+
+
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            
+            if (angles.Count == 0)
+            {
+                powerups = Random.Range(2, 8);
+                SpawnPowerups(radiusValue, powerups);
+            }else
+            {
+                angles.Clear();
+                powerups = Random.Range(2, 8);
+                SpawnPowerups(radiusValue, powerups);
+            }            
+        }
     }
 
     public void SpawnBombAtOffset(Vector3 inOffset)
@@ -283,29 +302,7 @@ public class Player : MonoBehaviour
             }
         }
         currentAngle = 0;
-        //if ( > angles.Count)
-        //{
-        //    //indexAngles = 0;
-        //} else
-        //{
-        //    foreach (var angle in angles)
-        //    {
-        //        currentAngle = angle;
-        //        float nextAngle = angle + 1;
-        //        angleInRadians = currentAngle * Mathf.Deg2Rad;
-        //        float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
-        //        Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
-        //        Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
-        //        Debug.DrawLine(currentPoint, nextPoint, Color.green, 10);
-        //    }
-        //    //currentAngle = angles[indexAngles];
-        //    //float nextAngle = angles[indexAngles+1];
-        //    //angleInRadians = currentAngle * Mathf.Deg2Rad;
-        //    //float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
-        //    //Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
-        //    //Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
-        //    //Debug.DrawLine(currentPoint, nextPoint, Color.green, 10);            
-        //}
+        
         float distance = Vector3.Distance(transform.position, enemyTransform.position);
         if (distance <= radius)
         {
@@ -355,34 +352,35 @@ public class Player : MonoBehaviour
                 Debug.DrawLine(currentPoint + transform.position, nextPoint + transform.position, Color.green);
                 indexAngles++;
             }
-        }
-
-
-
-        if (indexAngles + 1 >= angles.Count)
-        {
-            indexAngles = 0;
-            currentAngle = angles.Count;
-            nextAngle = angles[0];
-            angleInRadians = currentAngle * Mathf.Deg2Rad;
-            float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
-            Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
-            Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
-            Debug.DrawLine(currentPoint + transform.position, nextPoint + transform.position, Color.green, 20);            
-        } else
-        {
-            currentAngle = angles[indexAngles];
-            nextAngle = angles[indexAngles + 1];
-            angleInRadians = currentAngle * Mathf.Deg2Rad;
-            float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
-            Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
-            Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
-            Debug.DrawLine(currentPoint + transform.position, nextPoint + transform.position, Color.green, 20);
-            indexAngles++;
-        }       
+        }         
            
     }
 
-    
+    public void SpawnPowerups(float radius, int numberOfPowerups)
+    {
+        if (angles.Count < numberOfPowerups)
+        {
+            for (int i = 0; i < numberOfPowerups; i++)
+            {
+                currentAngle += 360 / numberOfPowerups;
+                angles.Add(currentAngle);
+            }
+        }
+        currentAngle = 0;
+
+
+        if (indexAngles <= angles.Count-1)
+        {            
+            currentAngle = angles[indexAngles];
+            angleInRadians = currentAngle * Mathf.Deg2Rad;
+            Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
+            Vector3 offsetPoint = currentPoint * 0.05f;
+            Debug.DrawLine(currentPoint + transform.position, offsetPoint + transform.position, Color.green, 5);
+            indexAngles++;
+        } else
+        {
+
+        }
+    }
 
 }
