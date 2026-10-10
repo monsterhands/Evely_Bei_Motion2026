@@ -17,24 +17,24 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        float distance = Vector2.Distance(transform.position, playerShip.transform.position);
-        if (distance <= comfortZone)
-        {
-            shipInZone = true;
-            Skedaddle();
+        //float distance = Vector2.Distance(transform.position, playerShip.transform.position);
+        //if (distance <= comfortZone)
+        //{
+        //    shipInZone = true;
+        //    Skedaddle();
 
-        } else
-        {
-            shipInZone = false;
-        }
+        //} else
+        //{
+        //    shipInZone = false;
+        //}
 
 
     }
 
-    public void Skedaddle()
-    {           
-        direction = (transform.position - playerShip.transform.position).normalized;
+    //public void Skedaddle()
+    //{           
+    //    direction = (transform.position - playerShip.transform.position).normalized;
 
-        transform.position += moveSpeed * Time.deltaTime * direction;
-    }
+    //    transform.position += moveSpeed * Time.deltaTime * direction;
+    //}
 }

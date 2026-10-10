@@ -32,11 +32,22 @@ public class Player : MonoBehaviour
     public float decelerationTime;
     public float deceleration;
 
+    public List<float> angles;
+    float currentAngle = 0;
+    float nextAngle;
+    float angleInRadians;
+    Vector3 radiusOffset;
+    public float radiusValue;
+    public int circlePointsValue;
+    public int indexAngles;
+
     void Start()
     {
         currentAcceleration = maxSpeed / accelerationTime;
 
         deceleration = maxSpeed / decelerationTime;
+        radiusValue = 2f;
+        circlePointsValue = Random.Range(3, 10);
     }
 
     void Update()
@@ -86,6 +97,8 @@ public class Player : MonoBehaviour
             maxRange = maxRange + 0.5f;
             DetectAsteroids(maxRange, asteroidTransforms);
         }
+
+        EnemyRadar(radiusValue, circlePointsValue);
     }
 
     public void SpawnBombAtOffset(Vector3 inOffset)
@@ -258,5 +271,118 @@ public class Player : MonoBehaviour
 
         transform.position = transform.position + currentVelocity * Time.deltaTime;
     }
+
+    public void EnemyRadar(float radius, int circlePoints)
+    {
+        if(angles.Count < circlePoints)
+        {
+            for (int i = 0; i < circlePoints; i++)
+            {
+                currentAngle += 360 / circlePoints;
+                angles.Add(currentAngle);
+            }
+        }
+        currentAngle = 0;
+        //if ( > angles.Count)
+        //{
+        //    //indexAngles = 0;
+        //} else
+        //{
+        //    foreach (var angle in angles)
+        //    {
+        //        currentAngle = angle;
+        //        float nextAngle = angle + 1;
+        //        angleInRadians = currentAngle * Mathf.Deg2Rad;
+        //        float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
+        //        Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
+        //        Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
+        //        Debug.DrawLine(currentPoint, nextPoint, Color.green, 10);
+        //    }
+        //    //currentAngle = angles[indexAngles];
+        //    //float nextAngle = angles[indexAngles+1];
+        //    //angleInRadians = currentAngle * Mathf.Deg2Rad;
+        //    //float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
+        //    //Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
+        //    //Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
+        //    //Debug.DrawLine(currentPoint, nextPoint, Color.green, 10);            
+        //}
+        float distance = Vector3.Distance(transform.position, enemyTransform.position);
+        if (distance <= radius)
+        {
+            if (indexAngles + 1 >= angles.Count)
+            {
+                indexAngles = 0;
+                currentAngle = angles.Count;
+                nextAngle = angles[0];
+                angleInRadians = currentAngle * Mathf.Deg2Rad;
+                float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
+                Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
+                Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
+                Debug.DrawLine(currentPoint + transform.position, nextPoint + transform.position, Color.red);
+            }
+            else
+            {
+                currentAngle = angles[indexAngles];
+                nextAngle = angles[indexAngles + 1];
+                angleInRadians = currentAngle * Mathf.Deg2Rad;
+                float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
+                Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
+                Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
+                Debug.DrawLine(currentPoint + transform.position, nextPoint + transform.position, Color.red);
+                indexAngles++;
+            }
+        } else
+        {
+            if (indexAngles + 1 >= angles.Count)
+            {
+                indexAngles = 0;
+                currentAngle = angles.Count;
+                nextAngle = angles[0];
+                angleInRadians = currentAngle * Mathf.Deg2Rad;
+                float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
+                Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
+                Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
+                Debug.DrawLine(currentPoint + transform.position, nextPoint + transform.position, Color.green);
+            }
+            else
+            {
+                currentAngle = angles[indexAngles];
+                nextAngle = angles[indexAngles + 1];
+                angleInRadians = currentAngle * Mathf.Deg2Rad;
+                float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
+                Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
+                Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
+                Debug.DrawLine(currentPoint + transform.position, nextPoint + transform.position, Color.green);
+                indexAngles++;
+            }
+        }
+
+
+
+        if (indexAngles + 1 >= angles.Count)
+        {
+            indexAngles = 0;
+            currentAngle = angles.Count;
+            nextAngle = angles[0];
+            angleInRadians = currentAngle * Mathf.Deg2Rad;
+            float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
+            Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
+            Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
+            Debug.DrawLine(currentPoint + transform.position, nextPoint + transform.position, Color.green, 20);            
+        } else
+        {
+            currentAngle = angles[indexAngles];
+            nextAngle = angles[indexAngles + 1];
+            angleInRadians = currentAngle * Mathf.Deg2Rad;
+            float nextAngleInRadians = nextAngle * Mathf.Deg2Rad;
+            Vector3 currentPoint = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)) * radius;
+            Vector3 nextPoint = new Vector3(Mathf.Cos(nextAngleInRadians), Mathf.Sin(nextAngleInRadians)) * radius;
+            Debug.DrawLine(currentPoint + transform.position, nextPoint + transform.position, Color.green, 20);
+            indexAngles++;
+        }       
+           
+    }
+
+    
 
 }
