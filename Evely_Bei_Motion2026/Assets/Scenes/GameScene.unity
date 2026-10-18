@@ -1378,12 +1378,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
+      propertyPath: radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
       propertyPath: maxSpeed
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
       propertyPath: moveSpeed
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
       propertyPath: playerShip
@@ -1394,9 +1398,17 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
+      propertyPath: defenceZone
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
       propertyPath: maxDistance
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
+      propertyPath: missilePrefab
+      value: 
+      objectReference: {fileID: 1761202055222398, guid: 561200a1f15bfaa449ccc4cb56a3a980, type: 3}
     - target: {fileID: 114516115454935764, guid: e3900e4d87ee29c43ad1d9098b51432c, type: 3}
       propertyPath: accelerationTime
       value: 2
@@ -1449,6 +1461,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5ccb23301dc0bf4bafad9306aa05624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Seeker
+  playerShip: {fileID: 1430735984}
+  greenOrb: {fileID: 310291743}
+  minDistance: 0
+  shipInOrbit: 0
+  maxTimer: 0
 --- !u!4 &988009109
 Transform:
   m_ObjectHideFlags: 0
